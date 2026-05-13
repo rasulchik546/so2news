@@ -3,25 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Standoff 2 News</title>
+  <title>News Hub</title>
   <style>
     :root {
-      --bg: #040404;
+      --bg: #050507;
       --bg2: #0a0a0d;
-      --panel: rgba(10, 10, 12, 0.93);
+      --panel: rgba(13, 13, 17, 0.94);
       --panel-soft: rgba(255, 255, 255, 0.03);
       --line: rgba(255, 255, 255, 0.10);
       --line-red: rgba(255, 58, 58, 0.22);
-      --text: #f6f7fa;
-      --muted: #a5adbb;
+      --text: #f5f7fb;
+      --muted: #a4aab8;
       --red: #ff2d2d;
       --red2: #ff6a3d;
       --white: #ffffff;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.58);
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.55);
       --radius: 22px;
       --radius-lg: 28px;
-      --sidebar: 278px;
-      --rightbar: 360px;
     }
 
     * { box-sizing: border-box; }
@@ -31,33 +29,22 @@
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 15% 0%, rgba(255, 45, 45, 0.15), transparent 24%),
-        radial-gradient(circle at 95% 10%, rgba(255, 106, 61, 0.08), transparent 24%),
+        radial-gradient(circle at 0% 0%, rgba(255, 45, 45, 0.15), transparent 24%),
+        radial-gradient(circle at 100% 10%, rgba(255, 106, 61, 0.09), transparent 22%),
         linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
     a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
+    button, input, select, textarea { font: inherit; }
 
     .app {
       width: min(1600px, calc(100% - 20px));
       margin: 0 auto;
       padding: 12px 0 18px;
       display: grid;
-      grid-template-columns: var(--sidebar) minmax(0, 1fr) var(--rightbar);
+      grid-template-columns: 270px minmax(0, 1fr) 360px;
       gap: 16px;
       min-height: 100vh;
-    }
-
-    .sidebar,
-    .rightbar,
-    .content {
-      min-width: 0;
-    }
-
-    .sidebar,
-    .rightbar {
-      position: relative;
     }
 
     .panel {
@@ -68,11 +55,12 @@
       overflow: hidden;
     }
 
+    .sidebar,
+    .rightbar,
+    .content { min-width: 0; }
+
     .sidebar .panel,
-    .rightbar .panel {
-      position: sticky;
-      top: 12px;
-    }
+    .rightbar .panel { position: sticky; top: 12px; }
 
     .brand {
       padding: 20px 18px 18px;
@@ -81,7 +69,7 @@
 
     .brand h1 {
       margin: 0;
-      font-size: 34px;
+      font-size: 33px;
       line-height: 0.95;
       letter-spacing: 0.5px;
       text-transform: uppercase;
@@ -112,7 +100,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 14px 14px;
+      padding: 14px;
       border-radius: 16px;
       color: #e8ebf2;
       border: 1px solid transparent;
@@ -126,9 +114,8 @@
     }
 
     .menu a.active {
-      background: linear-gradient(135deg, rgba(255,45,45,0.22), rgba(255,255,255,0.03));
+      background: linear-gradient(135deg, rgba(255,45,45,0.20), rgba(255,255,255,0.03));
       border-color: rgba(255,45,45,0.28);
-      box-shadow: inset 0 0 0 1px rgba(255,45,45,0.10);
     }
 
     .menu .ico {
@@ -266,7 +253,6 @@
     }
 
     .hero {
-      margin: 0 0 2px;
       border-radius: var(--radius-lg);
       overflow: hidden;
       border: 1px solid var(--line);
@@ -277,8 +263,7 @@
     .hero-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-      gap: 0;
-      min-height: 420px;
+      min-height: 400px;
     }
 
     .hero-main {
@@ -286,10 +271,10 @@
       padding: 26px;
       display: flex;
       align-items: flex-end;
-      min-height: 420px;
+      min-height: 400px;
       background:
         linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.54) 50%, rgba(0,0,0,0.18) 100%),
-        url('https://images.unsplash.com/photo-1542751371-adc38448a05a?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+        url('https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     }
 
     .hero-main::before {
@@ -302,7 +287,7 @@
 
     .hero-copy {
       position: relative;
-      max-width: 620px;
+      max-width: 650px;
       display: grid;
       gap: 14px;
     }
@@ -324,8 +309,8 @@
 
     .hero-copy h2 {
       margin: 0;
-      font-size: clamp(30px, 4vw, 58px);
-      line-height: 0.96;
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 0.98;
       text-transform: uppercase;
       letter-spacing: 0.4px;
     }
@@ -341,7 +326,7 @@
       margin: 0;
       color: #e0e5ee;
       line-height: 1.7;
-      max-width: 520px;
+      max-width: 540px;
     }
 
     .hero-controls {
@@ -363,6 +348,8 @@
       height: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.30);
+      border: 0;
+      cursor: pointer;
     }
 
     .dot.active {
@@ -381,7 +368,7 @@
 
     .mini-card {
       position: relative;
-      min-height: 124px;
+      min-height: 118px;
       border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.10);
@@ -401,22 +388,9 @@
       background: linear-gradient(180deg, transparent, rgba(0,0,0,0.82));
     }
 
-    .mini-card > div {
-      position: relative;
-      z-index: 1;
-    }
-
-    .mini-card strong {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .mini-card span {
-      color: #d7dce8;
-      font-size: 13px;
-      line-height: 1.4;
-    }
+    .mini-card > div { position: relative; z-index: 1; }
+    .mini-card strong { display: block; font-size: 18px; margin-bottom: 4px; }
+    .mini-card span { color: #d7dce8; font-size: 13px; line-height: 1.4; }
 
     .stats-row {
       display: grid;
@@ -474,7 +448,6 @@
     .tab.active {
       background: linear-gradient(135deg, rgba(255,45,45,0.22), rgba(255,255,255,0.04));
       border-color: rgba(255,45,45,0.30);
-      box-shadow: 0 0 0 1px rgba(255,45,45,0.10) inset;
     }
 
     .news-grid {
@@ -557,12 +530,7 @@
       flex-wrap: wrap;
     }
 
-    .news-foot .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
+    .news-foot .actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .news-foot .actions button {
       width: auto;
       padding: 10px 12px;
@@ -672,64 +640,25 @@
       margin-bottom: 4px;
     }
 
-    .top-item small {
-      color: var(--muted);
-      font-size: 12px;
-    }
+    .top-item small { color: var(--muted); font-size: 12px; }
 
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .timebox {
-      padding: 14px 10px;
-      text-align: center;
+    .empty {
+      padding: 22px;
+      border: 1px dashed rgba(255,255,255,0.16);
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .timebox strong {
-      display: block;
-      font-size: 24px;
-      margin-bottom: 4px;
-      color: #ff5a5a;
-    }
-
-    .timebox span {
       color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .04em;
+      background: rgba(255,255,255,0.03);
+      text-align: center;
+      line-height: 1.7;
     }
 
-    .mini-hero {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      min-height: 180px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background:
-        linear-gradient(135deg, rgba(0,0,0,0.84), rgba(0,0,0,0.38)),
-        url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      padding: 16px;
-      display: flex;
-      align-items: flex-end;
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.65;
+      padding: 4px 0 8px;
     }
-
-    .mini-hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,45,45,0.20), transparent 36%);
-      pointer-events: none;
-    }
-
-    .mini-hero > div { position: relative; z-index: 1; }
-    .mini-hero strong { display: block; font-size: 20px; margin-bottom: 8px; }
-    .mini-hero span { color: #e4e8f0; line-height: 1.6; font-size: 13px; }
 
     .overlay {
       position: fixed;
@@ -794,69 +723,52 @@
       white-space: pre-wrap;
     }
 
-    .empty {
-      padding: 22px;
-      border: 1px dashed rgba(255,255,255,0.16);
-      border-radius: 18px;
-      color: var(--muted);
-      background: rgba(255,255,255,0.03);
-      text-align: center;
-      line-height: 1.7;
+    .upload {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
     }
 
-    .footer {
+    .upload input[type="file"] {
+      display: none;
+    }
+
+    .small-note {
       color: var(--muted);
-      text-align: center;
-      font-size: 13px;
-      line-height: 1.65;
-      padding: 4px 0 8px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 10px;
     }
 
     @media (max-width: 1450px) {
-      .app {
-        grid-template-columns: var(--sidebar) minmax(0, 1fr);
-      }
-      .rightbar {
-        grid-column: 1 / -1;
-      }
-      .rightbar .panel {
-        position: static;
-      }
+      .app { grid-template-columns: 270px minmax(0, 1fr); }
+      .rightbar { grid-column: 1 / -1; }
+      .rightbar .panel { position: static; }
     }
 
     @media (max-width: 980px) {
-      .app {
-        grid-template-columns: 1fr;
-      }
+      .app { grid-template-columns: 1fr; }
       .sidebar .panel,
-      .rightbar .panel {
-        position: static;
-      }
+      .rightbar .panel { position: static; }
       .hero-grid,
       .news-grid,
       .stats-row {
         grid-template-columns: 1fr;
       }
-      .compact .news-card {
-        grid-template-columns: 1fr;
-      }
+      .compact .news-card { grid-template-columns: 1fr; }
       .topbar {
         flex-direction: column;
         align-items: stretch;
       }
-      .top-actions {
-        justify-content: flex-start;
-      }
-      .search {
-        width: 100%;
-      }
+      .top-actions { justify-content: flex-start; }
+      .search { width: 100%; }
     }
 
     @media (max-width: 680px) {
       .news-grid { gap: 12px; }
       .top-item { grid-template-columns: 28px 1fr; }
       .thumb { display: none; }
-      .countdown { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -865,29 +777,31 @@
     <aside class="sidebar">
       <div class="panel">
         <div class="brand">
-          <h1><span>STANDOFF 2</span></h1>
-          <small>NEWS HUB</small>
+          <h1><span>NEWS</span> HUB</h1>
+          <small>ARTICLES</small>
         </div>
         <nav class="menu">
           <a class="active" href="#home"><span class="ico"></span>Главная</a>
-          <a href="#articles"><span class="ico"></span>Публикации</a>
+          <a href="#articles"><span class="ico"></span>Статьи</a>
           <a href="#categories"><span class="ico"></span>Категории</a>
           <a href="#top"><span class="ico"></span>Популярное</a>
-          <a href="#about"><span class="ico"></span>О проекте</a>
+          <a href="#about"><span class="ico"></span>О сайте</a>
         </nav>
 
         <div class="side-box">
-          <h3>Присоединяйся</h3>
-          <p>Короткий блок для соцсетей, ссылок или кнопок сообщества.</p>
-          <div style="height:12px"></div>
-          <button class="btn btn-white" type="button">Telegram</button>
-          <div style="height:10px"></div>
-          <button class="btn btn-dark" type="button">VK</button>
+          <h3>Загрузка JSON</h3>
+          <p>Если сайт открыт локально, JSON можно выбрать вручную. На хостинге он подхватится автоматически.</p>
+          <div class="upload">
+            <label class="btn btn-white" for="jsonUpload">Выбрать JSON</label>
+            <button class="btn btn-dark" id="reloadBtn" type="button">Перезагрузить</button>
+            <input id="jsonUpload" type="file" accept="application/json" />
+          </div>
+          <div class="small-note">Нужен файл с массивом статей: title, category, date, excerpt, image и content.</div>
         </div>
 
         <div class="side-box" style="border-color: rgba(255,45,45,0.25); background: linear-gradient(180deg, rgba(255,45,45,0.12), rgba(255,255,255,0.02));">
-          <h3>Поддержи проект</h3>
-          <p>Здесь можно разместить кнопку поддержки, донат или важное сообщение.</p>
+          <h3>Поддержка</h3>
+          <p>В этом блоке можно оставить важное сообщение, ссылку или кнопку без лишнего оформления.</p>
           <div style="height:12px"></div>
           <button class="btn btn-red" type="button">Поддержать</button>
         </div>
@@ -905,24 +819,24 @@
           <a href="#" data-cat="guides">Гайды</a>
         </div>
         <div class="top-actions">
-          <input class="search" id="searchInput" type="search" placeholder="Поиск по сайту..." />
+          <input class="search" id="searchInput" type="search" placeholder="Поиск по статьям..." />
           <div class="soc">VK</div>
           <div class="soc">TG</div>
           <div class="soc">YT</div>
         </div>
       </section>
 
-      <section class="hero" id="hero">
+      <section class="hero">
         <div class="hero-grid">
           <div class="hero-main" id="heroMain">
             <div class="hero-copy">
-              <div class="kicker" id="heroKicker">Главная тема</div>
-              <h2 id="heroTitle">СТРОГИЙ НОВОСТНОЙ ДИЗАЙН <span>STANDOFF 2</span></h2>
-              <p id="heroText">Это шаблон без наполнения новостями: только аккуратный стиль, категории, блоки и структура. Позже сюда можно подключить редактор и JSON.</p>
+              <div class="kicker" id="heroKicker">Статья</div>
+              <h2 id="heroTitle">Здесь будут <span>новости и статьи</span></h2>
+              <p id="heroText">Подключи news.json — и сайт автоматически покажет статьи, фильтры и карточки. Сейчас здесь только рабочая структура без выдуманных новостей.</p>
               <div class="hero-controls">
-                <button class="btn btn-white" id="heroOpenBtn" type="button">Открыть</button>
-                <button class="btn btn-dark" id="heroFavBtn" type="button">В избранное</button>
-                <button class="btn btn-red" id="heroSwitchBtn" type="button">Следующий слайд</button>
+                <button class="btn btn-white" id="heroOpenBtn" type="button">Открыть статью</button>
+                <button class="btn btn-dark" id="heroPrevBtn" type="button">Назад</button>
+                <button class="btn btn-red" id="heroNextBtn" type="button">Вперёд</button>
               </div>
               <div class="dots" id="heroDots"></div>
             </div>
@@ -930,13 +844,13 @@
 
           <div class="hero-side">
             <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&w=900&q=80');">
-              <div><strong>Публикации</strong><span>Шаблон карточек с аккуратными отступами и тёмной подложкой.</span></div>
+              <div><strong>Чтение статей</strong><span>Кликаешь по карточке и открываешь полный текст в окне.</span></div>
             </div>
-            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1514477917009-389c76a86b68?auto=format&fit=crop&w=900&q=80');">
-              <div><strong>Категории</strong><span>Турниры, обновления, слухи, гайды и другие разделы.</span></div>
+            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=900&q=80');">
+              <div><strong>Категории</strong><span>Новости, обновления, турниры, слухи и гайды.</span></div>
             </div>
-            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80');">
-              <div><strong>Слайдер</strong><span>Строгий hero-блок с красным градиентом и белыми кнопками.</span></div>
+            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80');">
+              <div><strong>Рабочий шаблон</strong><span>Только функции чтения, поиска и фильтрации.</span></div>
             </div>
           </div>
         </div>
@@ -948,16 +862,16 @@
           <strong id="statCategories">0</strong>
         </div>
         <div class="statbox">
-          <span>Слайдов</span>
-          <strong id="statSlides">0</strong>
+          <span>Статей</span>
+          <strong id="statPosts">0</strong>
         </div>
         <div class="statbox">
-          <span>Шаблонов</span>
-          <strong>UI</strong>
+          <span>Показано</span>
+          <strong id="statVisible">0</strong>
         </div>
         <div class="statbox">
           <span>Статус</span>
-          <strong style="font-size:18px;color:#ff6a6a;">Готово</strong>
+          <strong id="statusText" style="font-size:18px;color:#ff6a6a;">Ожидание</strong>
         </div>
       </section>
 
@@ -965,26 +879,19 @@
         <div class="right-section" style="padding-bottom: 0;">
           <div class="section-head">
             <div>
-              <h3>Последние публикации</h3>
-              <small>Сейчас это демонстрационный шаблон без реальных новостей</small>
+              <h3>Статьи и новости</h3>
+              <small>Выбирай категорию, ищи по тексту и открывай полную статью</small>
             </div>
             <button class="btn btn-dark" id="toggleLayoutBtn" type="button" style="width:auto; padding:10px 12px;">Компактно</button>
           </div>
 
-          <div class="tabs" id="categoryTabs">
-            <button class="tab active" data-filter="all" type="button">Все</button>
-            <button class="tab" data-filter="news" type="button">Новости</button>
-            <button class="tab" data-filter="updates" type="button">Обновления</button>
-            <button class="tab" data-filter="tournaments" type="button">Турниры</button>
-            <button class="tab" data-filter="rumors" type="button">Слухи</button>
-            <button class="tab" data-filter="guides" type="button">Гайды</button>
-          </div>
+          <div class="tabs" id="categoryTabs"></div>
         </div>
 
         <div class="right-section" style="padding-top: 14px;">
           <div class="news-grid" id="newsGrid"></div>
           <div class="footer" id="about">
-            Сайт собран как аккуратный игровой новостник: тёмная тема, красные акценты, белые кнопки, категории и карточки. Позже можно подключить JSON из твоего редактора.
+            Простой новостник для чтения статей. Никаких лишних кнопок и фальшивых новостей.
           </div>
         </div>
       </section>
@@ -993,35 +900,13 @@
     <aside class="rightbar" id="categories">
       <div class="panel">
         <section class="right-section">
-          <div class="sidebar-title"><h3>Популярные теги</h3></div>
+          <div class="sidebar-title"><h3>Теги</h3></div>
           <div class="tag-cloud" id="tagCloud"></div>
         </section>
 
         <section class="right-section" id="top">
-          <div class="sidebar-title"><h3>Топ блок</h3></div>
-          <div class="mini-hero">
-            <div>
-              <strong id="heroSideTitle">Красный строгий стиль</strong>
-              <span id="heroSideText">Карточки, подложки, тени и градиенты собраны в одном стиле для новостного портала.</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="right-section">
-          <div class="sidebar-title"><h3>Топ публикаций</h3></div>
+          <div class="sidebar-title"><h3>Топ статей</h3></div>
           <div class="top-list" id="topList"></div>
-        </section>
-
-        <section class="right-section">
-          <div class="sidebar-title"><h3>До следующего обновления</h3></div>
-          <div class="countdown" id="countdown">
-            <div class="timebox"><strong>03</strong><span>Дней</span></div>
-            <div class="timebox"><strong>14</strong><span>Часов</span></div>
-            <div class="timebox"><strong>27</strong><span>Минут</span></div>
-            <div class="timebox"><strong>49</strong><span>Секунд</span></div>
-          </div>
-          <div style="height:12px"></div>
-          <button class="btn btn-red" type="button">Подробнее</button>
         </section>
       </div>
     </aside>
@@ -1031,14 +916,14 @@
     <div class="modal">
       <div class="modal-head">
         <div>
-          <h4 id="modalKicker">Публикация</h4>
+          <h4 id="modalKicker">Статья</h4>
         </div>
         <button class="close" id="closeModal" type="button">×</button>
       </div>
       <div class="modal-body">
-        <img class="modal-img" id="modalImg" alt="Публикация" />
+        <img class="modal-img" id="modalImg" alt="Статья" />
         <h3 class="modal-title" id="modalTitle">Заголовок</h3>
-        <p class="modal-text" id="modalText">Текст публикации.</p>
+        <p class="modal-text" id="modalText">Текст статьи.</p>
       </div>
     </div>
   </div>
@@ -1053,72 +938,18 @@
       { id: 'guides', label: 'Гайды' },
     ];
 
-    const slides = [
-      {
-        kicker: 'Главная новость',
-        title: 'СТРОГОЙ НОВОСТНОЙ ШАБЛОН <span>STANDOFF 2</span>',
-        text: 'Сделан в чёрных цветах с красным градиентом и белыми кнопками. Без лишнего шума, только ровная структура и аккуратные карточки.',
-        image: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1800&q=80'
-      },
-      {
-        kicker: 'Разделы',
-        title: 'КАТЕГОРИИ И ФИЛЬТРЫ',
-        text: 'Турниры, обновления, слухи, гайды и новости можно переключать кнопками. Позже можно подключить данные из JSON.',
-        image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1800&q=80'
-      },
-      {
-        kicker: 'Подача',
-        title: 'КАРТОЧКИ И ПРАВАЯ КОЛОНКА',
-        text: 'Аккуратные карточки, популярные теги, топ-блок и таймер создают ощущение готового портала.',
-        image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=80'
-      }
-    ];
+    const defaultTags = ['#новости', '#обновления', '#турниры', '#слухи', '#гайды', '#патч'];
 
-    const posts = [
-      {
-        id: 'news-1',
-        title: 'Шаблон публикации',
-        category: 'news',
-        categoryLabel: 'Новости',
-        date: '13 мая 2026',
-        excerpt: 'Показывает структуру карточки, отступы и компактную подачу без готового текста новости.',
-        image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        id: 'updates-1',
-        title: 'Обновление интерфейса',
-        category: 'updates',
-        categoryLabel: 'Обновления',
-        date: '12 мая 2026',
-        excerpt: 'Подойдёт для патчноутов и технических заметок, если потом подключить редактор с JSON.',
-        image: 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        id: 'tournament-1',
-        title: 'Блок турниров',
-        category: 'tournaments',
-        categoryLabel: 'Турниры',
-        date: '11 мая 2026',
-        excerpt: 'Карточка для анонса чемпионата, сетки или расписания игр.',
-        image: 'https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        id: 'rumor-1',
-        title: 'Блок слухов',
-        category: 'rumors',
-        categoryLabel: 'Слухи',
-        date: '10 мая 2026',
-        excerpt: 'Нужен для инсайдов, прогнозов и коротких заметок без перегрузки текста.',
-        image: 'https://images.unsplash.com/photo-1526931587630-0d1b9f4fca70?auto=format&fit=crop&w=1200&q=80'
-      }
-    ];
+    const slides = [];
 
-    const tags = ['#обновление', '#скины', '#оружие', '#киберспорт', '#карты', '#утечки', '#патчноут', '#ивенты'];
-
-    let currentSlide = 0;
-    let currentFilter = 'all';
-    let compact = false;
-    let currentPost = posts[0];
+    const state = {
+      posts: [],
+      visible: [],
+      currentFilter: 'all',
+      compact: false,
+      currentIndex: 0,
+      manualLoaded: false,
+    };
 
     const els = {
       heroMain: document.getElementById('heroMain'),
@@ -1126,13 +957,13 @@
       heroTitle: document.getElementById('heroTitle'),
       heroText: document.getElementById('heroText'),
       heroDots: document.getElementById('heroDots'),
-      heroSwitchBtn: document.getElementById('heroSwitchBtn'),
       heroOpenBtn: document.getElementById('heroOpenBtn'),
-      heroFavBtn: document.getElementById('heroFavBtn'),
-      heroSideTitle: document.getElementById('heroSideTitle'),
-      heroSideText: document.getElementById('heroSideText'),
+      heroPrevBtn: document.getElementById('heroPrevBtn'),
+      heroNextBtn: document.getElementById('heroNextBtn'),
       statCategories: document.getElementById('statCategories'),
-      statSlides: document.getElementById('statSlides'),
+      statPosts: document.getElementById('statPosts'),
+      statVisible: document.getElementById('statVisible'),
+      statusText: document.getElementById('statusText'),
       searchInput: document.getElementById('searchInput'),
       navCategories: document.getElementById('navCategories'),
       categoryTabs: document.getElementById('categoryTabs'),
@@ -1146,11 +977,12 @@
       modalTitle: document.getElementById('modalTitle'),
       modalText: document.getElementById('modalText'),
       modalImg: document.getElementById('modalImg'),
-      heroSide: document.getElementById('heroSide')
+      jsonUpload: document.getElementById('jsonUpload'),
+      reloadBtn: document.getElementById('reloadBtn')
     };
 
     function esc(text) {
-      return String(text)
+      return String(text ?? '')
         .replaceAll('&', '&amp;')
         .replaceAll('<', '&lt;')
         .replaceAll('>', '&gt;')
@@ -1158,7 +990,7 @@
         .replaceAll("'", '&#039;');
     }
 
-    function imgFallback(label) {
+    function imgFallback(label = 'News') {
       return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
           <defs>
@@ -1168,95 +1000,192 @@
             </linearGradient>
           </defs>
           <rect width="1200" height="675" fill="url(#g)" />
-          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="48" font-family="Arial" font-weight="700">${esc(label)}</text>
+          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="46" font-family="Arial" font-weight="700">${esc(label)}</text>
         </svg>
       `);
     }
 
-    function setSlide(index) {
-      currentSlide = (index + slides.length) % slides.length;
-      const slide = slides[currentSlide];
-      els.heroKicker.textContent = slide.kicker;
-      els.heroTitle.innerHTML = slide.title;
-      els.heroText.textContent = slide.text;
-      els.heroMain.style.backgroundImage = `linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.54) 50%, rgba(0,0,0,0.18) 100%), url('${slide.image}')`;
-      els.heroSideTitle.textContent = slide.kicker;
-      els.heroSideText.textContent = slide.text;
-      renderDots();
+    function normalizeCategory(cat) {
+      const c = String(cat || '').toLowerCase().trim();
+      const map = {
+        'новости': 'news',
+        'news': 'news',
+        'обновления': 'updates',
+        'updates': 'updates',
+        'турниры': 'tournaments',
+        'tournaments': 'tournaments',
+        'слухи': 'rumors',
+        'rumors': 'rumors',
+        'гайды': 'guides',
+        'guides': 'guides'
+      };
+      return map[c] || 'news';
     }
 
-    function renderDots() {
-      els.heroDots.innerHTML = slides.map((_, i) => `<button class="dot ${i === currentSlide ? 'active' : ''}" type="button" aria-label="Слайд ${i + 1}" data-slide="${i}"></button>`).join('');
+    function categoryLabel(cat) {
+      const found = categories.find(c => c.id === cat);
+      return found ? found.label : 'Новости';
     }
 
-    function filteredPosts() {
-      const q = els.searchInput.value.trim().toLowerCase();
-      return posts.filter(p => {
-        const categoryMatch = currentFilter === 'all' || p.category === currentFilter;
-        const searchMatch = !q || [p.title, p.excerpt, p.categoryLabel, p.date].join(' ').toLowerCase().includes(q);
-        return categoryMatch && searchMatch;
-      });
+    function toArray(data) {
+      if (Array.isArray(data)) return data;
+      if (data && typeof data === 'object') return [data];
+      return [];
     }
 
-    function renderPosts() {
-      const list = filteredPosts();
-      els.newsGrid.className = compact ? 'news-grid compact' : 'news-grid';
-      if (!list.length) {
-        els.newsGrid.innerHTML = `<div class="empty" style="grid-column:1/-1;">Ничего не найдено. Смените категорию или очистите поиск.</div>`;
-      } else {
-        els.newsGrid.innerHTML = list.map((p, index) => `
-          <article class="news-card" data-index="${index}">
-            <img class="img" src="${esc(p.image)}" alt="${esc(p.title)}" onerror="this.src='${imgFallback(p.title)}'" />
-            <div class="body">
-              <div class="meta">
-                <span class="pill">${esc(p.categoryLabel)}</span>
-                <span class="pill">${esc(p.date)}</span>
-              </div>
-              <h4>${esc(p.title)}</h4>
-              <p>${esc(p.excerpt)}</p>
-              <div class="news-foot">
-                <span>Сейчас это макет для будущего наполнения</span>
-                <div class="actions">
-                  <button class="btn btn-white" type="button" data-open="${esc(p.id)}">Открыть</button>
-                  <button class="btn btn-dark" type="button" data-fav="${esc(p.id)}">В избранное</button>
-                </div>
-              </div>
-            </div>
-          </article>
-        `).join('');
-      }
-      renderTop(list);
+    function defaultData() {
+      return [];
     }
 
-    function renderTop(list) {
-      const top = list.slice(0, 5);
-      els.topList.innerHTML = top.map((p, i) => `
-        <div class="top-item" data-open-card="${esc(p.id)}">
-          <div class="rank">${i + 1}</div>
-          <img class="thumb" src="${esc(p.image)}" alt="${esc(p.title)}" onerror="this.src='${imgFallback(p.title)}'" />
-          <div>
-            <strong>${esc(p.title)}</strong>
-            <small>${esc(p.date)}</small>
-          </div>
-        </div>
+    function setPosts(data, fromManual = false) {
+      state.posts = toArray(data).map((item, i) => ({
+        id: String(item.id || `post-${i + 1}`),
+        title: String(item.title || '').trim(),
+        category: normalizeCategory(item.category),
+        date: String(item.date || '').trim(),
+        excerpt: String(item.excerpt || item.short || '').trim(),
+        content: String(item.content || item.text || '').trim(),
+        image: String(item.image || '').trim(),
+        tags: Array.isArray(item.tags) ? item.tags : []
+      })).filter(p => p.title || p.excerpt || p.content);
+
+      state.manualLoaded = fromManual;
+      fillTabs();
+      renderTags();
+      applyFilters();
+      updateStats();
+      els.statusText.textContent = state.posts.length ? (fromManual ? 'JSON загружен' : 'Готово') : 'Пусто';
+    }
+
+    function fillTabs() {
+      const dynamicCats = [...new Set(state.posts.map(p => p.category))];
+      const items = categories.filter(c => c.id === 'all' || dynamicCats.includes(c.id) || c.id === 'news');
+      els.categoryTabs.innerHTML = items.map(c => `
+        <button class="tab ${c.id === state.currentFilter ? 'active' : ''}" type="button" data-filter="${c.id}">${esc(c.label)}</button>
       `).join('');
     }
 
     function renderTags() {
-      els.tagCloud.innerHTML = tags.map((t, i) => `<button class="tag ${i === 0 ? 'active' : ''}" type="button">${esc(t)}</button>`).join('');
+      const tags = [...new Set(state.posts.flatMap(p => p.tags))];
+      const list = tags.length ? tags : defaultTags;
+      els.tagCloud.innerHTML = list.map((t, i) => `<button class="tag ${i === 0 ? 'active' : ''}" type="button">${esc(t)}</button>`).join('');
     }
 
-    function renderStats() {
-      els.statCategories.textContent = categories.length - 1;
-      els.statSlides.textContent = slides.length;
+    function filteredPosts() {
+      const q = els.searchInput.value.trim().toLowerCase();
+      return state.posts.filter(p => {
+        const catOk = state.currentFilter === 'all' || p.category === state.currentFilter;
+        const text = [p.title, p.excerpt, p.content, p.date, categoryLabel(p.category)].join(' ').toLowerCase();
+        const searchOk = !q || text.includes(q);
+        return catOk && searchOk;
+      });
+    }
+
+    function currentHeroPost() {
+      return state.visible[state.currentIndex] || state.visible[0] || null;
+    }
+
+    function renderHero() {
+      const post = currentHeroPost();
+      if (!post) {
+        els.heroKicker.textContent = 'Статья';
+        els.heroTitle.innerHTML = 'Здесь будут <span>новости и статьи</span>';
+        els.heroText.textContent = 'Подключи news.json — и сайт автоматически покажет статьи, фильтры и карточки. Сейчас здесь только рабочая структура без выдуманных новостей.';
+        els.heroMain.style.backgroundImage = `linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.54) 50%, rgba(0,0,0,0.18) 100%), url('https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1600&q=80')`;
+        els.heroOpenBtn.disabled = true;
+        els.heroOpenBtn.style.opacity = '0.6';
+        renderDots();
+        return;
+      }
+
+      els.heroKicker.textContent = categoryLabel(post.category);
+      els.heroTitle.textContent = post.title;
+      els.heroText.textContent = post.excerpt || post.content || 'Открой статью, чтобы прочитать текст.';
+      els.heroMain.style.backgroundImage = `linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.54) 50%, rgba(0,0,0,0.18) 100%), url('${post.image || 'https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1600&q=80'}')`;
+      els.heroOpenBtn.disabled = false;
+      els.heroOpenBtn.style.opacity = '1';
+      renderDots();
+    }
+
+    function renderDots() {
+      els.heroDots.innerHTML = state.visible.map((_, i) => `<button class="dot ${i === state.currentIndex ? 'active' : ''}" type="button" data-slide="${i}" aria-label="Показать статью ${i + 1}"></button>`).join('');
+    }
+
+    function renderTop(list) {
+      const top = list.slice(0, 5);
+      els.topList.innerHTML = top.length ? top.map((p, i) => `
+        <div class="top-item" data-open-card="${esc(p.id)}">
+          <div class="rank">${i + 1}</div>
+          <img class="thumb" src="${esc(p.image || imgFallback(p.title || 'News'))}" alt="${esc(p.title)}" onerror="this.src='${imgFallback(p.title || 'News')}'" />
+          <div>
+            <strong>${esc(p.title)}</strong>
+            <small>${esc(p.date || categoryLabel(p.category))}</small>
+          </div>
+        </div>
+      `).join('') : '<div class="empty">Здесь появятся популярные статьи после загрузки JSON.</div>';
+    }
+
+    function renderPosts() {
+      const list = filteredPosts();
+      state.visible = list;
+      if (state.currentIndex >= list.length) state.currentIndex = 0;
+      els.statVisible.textContent = list.length;
+      renderHero();
+      renderTop(list);
+
+      if (!list.length) {
+        els.newsGrid.innerHTML = '<div class="empty" style="grid-column:1/-1;">Статей пока нет или они не подходят под фильтр. Загрузите корректный `news.json`.</div>';
+        return;
+      }
+
+      els.newsGrid.className = state.compact ? 'news-grid compact' : 'news-grid';
+      els.newsGrid.innerHTML = list.map((p, index) => `
+        <article class="news-card" data-index="${index}">
+          <img class="img" src="${esc(p.image || imgFallback(p.title || 'News'))}" alt="${esc(p.title)}" onerror="this.src='${imgFallback(p.title || 'News')}'" />
+          <div class="body">
+            <div class="meta">
+              <span class="pill">${esc(categoryLabel(p.category))}</span>
+              ${p.date ? `<span class="pill">${esc(p.date)}</span>` : ''}
+            </div>
+            <h4>${esc(p.title)}</h4>
+            <p>${esc(p.excerpt || p.content || '')}</p>
+            <div class="news-foot">
+              <span>Нажми, чтобы открыть статью</span>
+              <div class="actions">
+                <button class="btn btn-white" type="button" data-open="${esc(p.id)}">Открыть</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function updateStats() {
+      const cats = [...new Set(state.posts.map(p => p.category))];
+      els.statCategories.textContent = cats.length;
+      els.statPosts.textContent = state.posts.length;
+      els.statVisible.textContent = state.visible.length;
+    }
+
+    function applyFilters() {
+      renderPosts();
+      updateStats();
+      syncTabs();
+    }
+
+    function syncTabs() {
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === state.currentFilter);
+      });
     }
 
     function openModal(post) {
-      currentPost = post;
-      els.modalKicker.textContent = post.categoryLabel;
+      if (!post) return;
+      els.modalKicker.textContent = categoryLabel(post.category);
       els.modalTitle.textContent = post.title;
-      els.modalText.textContent = post.excerpt + '\n\nЗдесь позже можно подключить полный текст из JSON или редактора.';
-      els.modalImg.src = post.image;
+      els.modalText.textContent = post.content || post.excerpt || '';
+      els.modalImg.src = post.image || imgFallback(post.title || 'News');
+      els.modalImg.alt = post.title;
       els.overlay.classList.add('open');
     }
 
@@ -1264,78 +1193,135 @@
       els.overlay.classList.remove('open');
     }
 
-    function syncActiveTabs() {
-      document.querySelectorAll('[data-filter]').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === currentFilter);
-      });
+    function loadFromJsonUrl() {
+      els.statusText.textContent = 'Загрузка';
+      fetch('./news.json', { cache: 'no-store' })
+        .then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then(data => setPosts(data, false))
+        .catch(() => {
+          if (!state.posts.length) {
+            setPosts(defaultData(), false);
+            els.statusText.textContent = 'Нет JSON';
+          }
+        });
     }
 
-    setSlide(0);
-    renderDots();
-    renderTags();
-    renderStats();
-    renderPosts();
+    async function loadFromFile(file) {
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        setPosts(data, true);
+      } catch (err) {
+        alert('Не удалось прочитать JSON. Проверь формат файла.');
+        console.error(err);
+      }
+    }
 
-    els.heroSwitchBtn.addEventListener('click', () => setSlide(currentSlide + 1));
-    els.heroOpenBtn.addEventListener('click', () => openModal(posts[0]));
-    els.heroFavBtn.addEventListener('click', () => alert('Избранное можно подключить к localStorage позже.'));
-
-    els.heroDots.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-slide]');
-      if (!btn) return;
-      setSlide(Number(btn.dataset.slide));
-    });
-
-    els.toggleLayoutBtn.addEventListener('click', () => {
-      compact = !compact;
-      els.toggleLayoutBtn.textContent = compact ? 'Карточки' : 'Компактно';
+    // Events
+    els.searchInput.addEventListener('input', () => {
+      state.currentIndex = 0;
       renderPosts();
     });
-
-    els.searchInput.addEventListener('input', renderPosts);
 
     els.categoryTabs.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-filter]');
       if (!btn) return;
-      currentFilter = btn.dataset.filter;
-      syncActiveTabs();
+      state.currentFilter = btn.dataset.filter;
+      state.currentIndex = 0;
+      syncTabs();
       renderPosts();
     });
 
     els.navCategories.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-cat]');
       if (!btn) return;
-      currentFilter = btn.dataset.cat;
-      if (currentFilter === 'all') currentFilter = 'all';
-      syncActiveTabs();
+      state.currentFilter = btn.dataset.cat;
+      state.currentIndex = 0;
+      syncTabs();
       renderPosts();
     });
 
-    document.addEventListener('click', (e) => {
+    els.toggleLayoutBtn.addEventListener('click', () => {
+      state.compact = !state.compact;
+      els.toggleLayoutBtn.textContent = state.compact ? 'Карточки' : 'Компактно';
+      renderPosts();
+    });
+
+    els.heroPrevBtn.addEventListener('click', () => {
+      if (!state.visible.length) return;
+      state.currentIndex = (state.currentIndex - 1 + state.visible.length) % state.visible.length;
+      renderHero();
+    });
+
+    els.heroNextBtn.addEventListener('click', () => {
+      if (!state.visible.length) return;
+      state.currentIndex = (state.currentIndex + 1) % state.visible.length;
+      renderHero();
+    });
+
+    els.heroOpenBtn.addEventListener('click', () => openModal(currentHeroPost()));
+
+    els.newsGrid.addEventListener('click', (e) => {
       const openBtn = e.target.closest('[data-open]');
       if (openBtn) {
-        const post = posts.find(p => p.id === openBtn.dataset.open);
+        const post = state.visible.find(p => p.id === openBtn.dataset.open);
         if (post) openModal(post);
         return;
       }
-      const card = e.target.closest('[data-open-card]');
-      if (card) {
-        const post = posts.find(p => p.id === card.dataset.openCard);
-        if (post) openModal(post);
-      }
-      const favBtn = e.target.closest('[data-fav]');
-      if (favBtn) {
-        alert('Кнопку избранного можно подключить к localStorage и списку любимых публикаций.');
+      const card = e.target.closest('[data-index]');
+      if (!card) return;
+      const post = state.visible[Number(card.dataset.index)];
+      if (post) {
+        state.currentIndex = Number(card.dataset.index);
+        renderHero();
+        openModal(post);
       }
     });
 
-    els.closeModal.addEventListener('click', closeModal);
+    els.topList.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-open-card]');
+      if (!card) return;
+      const post = state.visible.find(p => p.id === card.dataset.openCard);
+      if (post) {
+        state.currentIndex = state.visible.findIndex(p => p.id === post.id);
+        renderHero();
+        openModal(post);
+      }
+    });
+
     els.overlay.addEventListener('click', (e) => {
       if (e.target === els.overlay) closeModal();
     });
+
+    els.closeModal.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
+
+    els.jsonUpload.addEventListener('change', async () => {
+      const file = els.jsonUpload.files && els.jsonUpload.files[0];
+      if (file) await loadFromFile(file);
+      els.jsonUpload.value = '';
+    });
+
+    els.reloadBtn.addEventListener('click', () => {
+      if (state.manualLoaded) {
+        state.manualLoaded = false;
+        loadFromJsonUrl();
+      } else {
+        loadFromJsonUrl();
+      }
+    });
+
+    // Init
+    fillTabs();
+    renderTags();
+    updateStats();
+    syncTabs();
+    loadFromJsonUrl();
   </script>
 </body>
 </html>

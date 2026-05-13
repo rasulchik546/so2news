@@ -33,7 +33,7 @@
     }
 
     a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
+    button, input, select { font: inherit; }
 
     .app {
       width: min(1200px, calc(100% - 20px));
@@ -82,11 +82,12 @@
 
     .controls {
       display: grid;
-      grid-template-columns: 1fr 260px;
+      grid-template-columns: 1fr 180px;
       gap: 12px;
+      align-items: center;
     }
 
-    .search {
+    .search, .select {
       width: 100%;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.04);
@@ -98,19 +99,9 @@
     }
 
     .search::placeholder { color: #9299a8; }
-    .search:focus {
+    .search:focus, .select:focus {
       border-color: rgba(255,45,45,0.8);
       box-shadow: 0 0 0 3px rgba(255,45,45,0.16);
-    }
-
-    .select {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 12px 14px;
-      outline: none;
     }
 
     .tabs {
@@ -128,6 +119,7 @@
       cursor: pointer;
       transition: .15s ease;
       font-size: 13px;
+      white-space: nowrap;
     }
 
     .tab:hover { transform: translateY(-1px); }
@@ -326,6 +318,12 @@
       white-space: pre-wrap;
     }
 
+    .status {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     @media (max-width: 900px) {
       .controls { grid-template-columns: 1fr; }
       .news-grid { grid-template-columns: 1fr; }
@@ -348,6 +346,7 @@
         </select>
       </div>
       <div class="tabs" id="tabs"></div>
+      <div class="status" id="statusText">Чтение файла news.json из этой же папки...</div>
     </section>
 
     <section class="panel" style="padding: 18px; display: grid; gap: 14px;" id="articles">
@@ -360,7 +359,7 @@
       </div>
 
       <div class="news-grid" id="newsGrid"></div>
-      <div class="footer" id="about">Простой новостник для чтения статей без лишних блоков.</div>
+      <div class="footer" id="about">Если `news.json` лежит рядом с этим файлом и сайт открыт через сервер или GitHub Pages, статьи загрузятся автоматически.</div>
     </section>
   </div>
 
@@ -380,8 +379,6 @@
     </div>
   </div>
 
-  <input id="jsonUpload" type="file" accept="application/json" hidden />
-
   <script>
     const categories = [
       { id: 'all', label: 'Все' },
@@ -397,7 +394,6 @@
       visible: [],
       currentFilter: 'all',
       compact: false,
-      currentIndex: 0,
     };
 
     const els = {
@@ -405,6 +401,7 @@
       searchInput: document.getElementById('searchInput'),
       sortSelect: document.getElementById('sortSelect'),
       toggleLayoutBtn: document.getElementById('toggleLayoutBtn'),
+      statusText: document.getElementById('statusText'),
       newsGrid: document.getElementById('newsGrid'),
       overlay: document.getElementById('overlay'),
       closeModal: document.getElementById('closeModal'),
@@ -412,7 +409,6 @@
       modalTitle: document.getElementById('modalTitle'),
       modalText: document.getElementById('modalText'),
       modalImg: document.getElementById('modalImg'),
-      jsonUpload: document.getElementById('jsonUpload'),
     };
 
     function esc(text) {
@@ -478,6 +474,10 @@
         image: String(item.image || '').trim(),
       })).filter(p => p.title || p.excerpt || p.content);
 
+      els.statusText.textContent = state.posts.length
+        ? `news.json загружен: ${state.posts.length} статей`
+        : 'news.json пустой или не содержит статей';
+
       renderTabs();
       renderPosts();
     }
@@ -505,11 +505,10 @@
     function renderPosts() {
       const list = filteredPosts();
       state.visible = list;
-      state.currentIndex = 0;
       syncTabs();
 
       if (!list.length) {
-        els.newsGrid.innerHTML = '<div class="empty" style="grid-column:1/-1;">Статей пока нет или они не подходят под фильтр. Загрузите корректный `news.json`.</div>';
+        els.newsGrid.innerHTML = '<div class="empty" style="grid-column:1/-1;">Статей пока нет или они не подходят под фильтр.</div>';
         return;
       }
 
@@ -558,19 +557,11 @@
         })
         .then(setPosts)
         .catch(() => {
-          setPosts([]);
+          state.posts = [];
+          els.statusText.textContent = 'Не удалось прочитать news.json из папки рядом с сайтом';
+          renderTabs();
+          renderPosts();
         });
-    }
-
-    async function loadFromFile(file) {
-      try {
-        const text = await file.text();
-        const data = JSON.parse(text);
-        setPosts(data);
-      } catch (err) {
-        alert('Не удалось прочитать JSON. Проверь формат файла.');
-        console.error(err);
-      }
     }
 
     els.tabs.addEventListener('click', (e) => {
@@ -604,6 +595,7 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    els.jsonUpload.addEventListener('change', async () => {
-      const file = els.jsonUpload.files && els.jsonUpload.files[0];
-      if (
+    renderTabs();
+    loadFromJsonUrl();
+  </script>
+</

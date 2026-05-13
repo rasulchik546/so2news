@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Standoff 2 News</title>
+  <style>
+    :root {
+      --bg: #06111f;
+      --bg2: #0b1730;
+      --card: rgba(13, 24, 44, 0.9);
+      --card2: rgba(255,255,255,0.04);
+      --line: rgba(140, 170, 230, 0.18);
+      --text: #edf4ff;
+      --muted: #98a9c6;
+      --accent: #4da3ff;
+      --accent2: #75f0ff;
+      --good: #37d39e;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(77,163,255,0.22), transparent 28%),
+        radial-gradient(circle at top right, rgba(117,240,255,0.12), transparent 26%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+    }
+
+    .wrap {
+      width: min(1450px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 30px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(9,19,37,0.92), rgba(13,24,44,0.82));
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      padding: 20px;
+      align-items: stretch;
+    }
+
+    .brand {
+      padding: 10px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: 0.5px;
+    }
+
+    .brand p {
+      margin: 16px 0 0;
+      max-width: 760px;
+      color: #d6e2f4;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 110px;
+    }
+
+    .stat span { color: var(--muted); font-size: 13px; }
+    .stat strong { margin-top: 6px; font-size: 28px; }
+
+    .bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 0 20px 18px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: #dfeaff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .toolbar {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1.5fr 0.6fr 0.6fr;
+      gap: 12px;
+    }
+
+    .input, .select {
+      width: 100%;
+      border: 1px solid rgba(140,170,230,0.22);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 13px 15px;
+      font: inherit;
+      outline: none;
+    }
+
+    .input::placeholder { color: #8ea0bf; }
+    .input:focus, .select:focus { border-color: rgba(77,163,255,0.9); box-shadow: 0 0 0 3px rgba(77,163,255,0.15); }
+
+    .main {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-hd {
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card-hd h2, .card-hd h3 { margin: 0; }
+    .card-hd small { color: var(--muted); }
+
+    .featured {
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .featured-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(77,163,255,0.18), rgba(117,240,255,0.08));
+      border: 1px solid var(--line);
+      display: block;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: #dfe9ff;
+      font-size: 12px;
+    }
+
+    .featured h3 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.15;
+    }
+
+    .featured p {
+      margin: 0;
+      color: #d4e0f2;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .news-list {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .news-card {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 14px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(77,163,255,0.55);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .thumb {
+      width: 100%;
+      height: 100%;
+      min-height: 90px;
+      object-fit: cover;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .news-body h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .news-body p {
+      margin: 0;
+      color: #c9d6ea;
+      line-height: 1.55;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    .news-info {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .sidebox {
+      display: grid;
+      gap: 16px;
+    }
+
+    .side-section {
+      padding: 18px;
+    }
+
+    .empty {
+      padding: 22px;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: center;
+      border: 1px dashed rgba(140,170,230,0.25);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.62);
+      padding: 18px;
+      z-index: 50;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-card {
+      width: min(980px, 100%);
+      max-height: 92vh;
+      overflow: auto;
+      background: #081423;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .close {
+      border: 0;
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .modal-body { padding: 18px; }
+    .modal-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .modal-title { margin: 0 0 10px; font-size: 30px; line-height: 1.15; }
+    .modal-text { margin: 0; color: #d7e3f5; line-height: 1.8; white-space: pre-wrap; }
+
+    .footer {
+      margin-top: 16px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-top, .main, .toolbar { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .news-card { grid-template-columns: 1fr; }
+      .thumb { height: 190px; }
+      .brand h1 { line-height: 1.05; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="brand">
+          <div class="meta-row" style="margin-bottom: 12px;">
+            <span class="badge">Standoff 2 News</span>
+            <span class="badge">GitHub Pages</span>
+            <span class="badge">JSON-driven</span>
+          </div>
+          <h1>Новости по Standoff 2</h1>
+          <p>Публичный сайт, который читает готовый <b>news.json</b> из репозитория и показывает новости как полноценный игровой портал. Ты просто заменяешь JSON — и сайт обновляется.</p>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <span>Всего новостей</span>
+            <strong id="totalCount">0</strong>
+          </div>
+          <div class="stat">
+            <span>Показано сейчас</span>
+            <strong id="visibleCount">0</strong>
+          </div>
+          <div class="stat">
+            <span>Последнее обновление</span>
+            <strong style="font-size: 18px;" id="lastUpdate">—</strong>
+          </div>
+          <div class="stat">
+            <span>Статус загрузки</span>
+            <strong style="font-size: 18px; color: var(--good);" id="statusText">Ожидание</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="bar">
+        <div class="chip">Новости</div>
+        <div class="chip">Обновления</div>
+        <div class="chip">Турниры</div>
+        <div class="chip">Гайды</div>
+        <div class="chip">Слухи</div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <input id="search" class="input" type="search" placeholder="Поиск по заголовку, тексту, автору или категории" />
+      <select id="filterCategory" class="select">
+        <option value="all">Все категории</option>
+      </select>
+      <select id="sortBy" class="select">
+        <option value="newest">Сначала новые</option>
+        <option value="oldest">Сначала старые</option>
+      </select>
+    </div>
+
+    <main class="main">
+      <section class="card">
+        <div class="card-hd">
+          <h2>Главная новость</h2>
+          <small>Кликни по карточке, чтобы открыть полный текст</small>
+        </div>
+        <div class="featured" id="featuredBox">
+          <div class="empty">Здесь появится первая новость после загрузки файла <b>news.json</b>.</div>
+        </div>
+      </section>
+
+      <aside class="sidebox">
+        <section class="card side-section">
+          <div class="card-hd" style="padding-left:0; padding-right:0; border-bottom: 0;">
+            <h3>Обновления сайта</h3>
+            <small>Простой блок справа</small>
+          </div>
+          <div style="color:#d6e3f6; line-height:1.7; font-size:14px;">
+            <p style="margin-top:0;">• Новости загружаются из JSON</p>
+            <p>• Можно добавлять хоть 10, хоть 100 новостей</p>
+            <p>• Для GitHub Pages это удобный статический формат</p>
+            <p style="margin-bottom:0;">• Позже можно добавить отдельные страницы новостей</p>
+          </div>
+        </section>
+
+        <section class="card side-section">
+          <div class="card-hd" style="padding-left:0; padding-right:0; border-bottom: 0;">
+            <h3>Подключение</h3>
+            <small>Как использовать</small>
+          </div>
+          <div style="color:#d6e3f6; line-height:1.7; font-size:14px;">
+            <p style="margin-top:0;">1. Положи этот файл как <b>index.html</b></p>
+            <p>2. Положи рядом <b>news.json</b></p>
+            <p>3. Добавь папку <b>images</b> с картинками</p>
+            <p style="margin-bottom:0;">4. Залей всё в репозиторий GitHub Pages</p>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <section class="card" style="margin-top:16px;">
+      <div class="card-hd">
+        <h2>Лента новостей</h2>
+        <small id="listHint">Загрузка...</small>
+      </div>
+      <div class="news-list" id="newsList"></div>
+    </section>
+
+    <div class="footer">
+      Для работы сайта рядом с этим файлом должен лежать <b>news.json</b>.<br />
+      Если картинка в JSON указана ссылкой или base64, сайт покажет её автоматически.
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="meta-row" id="modalMeta" style="margin-bottom: 8px;"></div>
+          <h2 class="modal-title" id="modalTitle">Заголовок</h2>
+        </div>
+        <button class="close" id="closeModal">×</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" class="modal-img" alt="Изображение новости" />
+        <p class="modal-text" id="modalText"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      all: [],
+      visible: []
+    };
+
+    const els = {
+      totalCount: document.getElementById('totalCount'),
+      visibleCount: document.getElementById('visibleCount'),
+      lastUpdate: document.getElementById('lastUpdate'),
+      statusText: document.getElementById('statusText'),
+      search: document.getElementById('search'),
+      filterCategory: document.getElementById('filterCategory'),
+      sortBy: document.getElementById('sortBy'),
+      featuredBox: document.getElementById('featuredBox'),
+      newsList: document.getElementById('newsList'),
+      listHint: document.getElementById('listHint'),
+      modal: document.getElementById('modal'),
+      modalTitle: document.getElementById('modalTitle'),
+      modalText: document.getElementById('modalText'),
+      modalImg: document.getElementById('modalImg'),
+      modalMeta: document.getElementById('modalMeta'),
+      closeModal: document.getElementById('closeModal')
+    };
+
+    function safeText(value) {
+      return String(value ?? '').trim();
+    }
+
+    function normalizeImage(image) {
+      if (!image) return '';
+      const value = String(image).trim();
+      if (!value) return '';
+      return value;
+    }
+
+    function formatDate(value) {
+      if (!value) return 'Без даты';
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return value;
+      return d.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function toArray(data) {
+      if (Array.isArray(data)) return data;
+      if (data && typeof data === 'object') return [data];
+      return [];
+    }
+
+    async function loadNews() {
+      els.statusText.textContent = 'Загрузка';
+      try {
+        const response = await fetch('./news.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        state.all = toArray(data)
+          .map(item => ({
+            id: safeText(item.id) || crypto.randomUUID(),
+            title: safeText(item.title) || 'Без названия',
+            category: safeText(item.category) || 'Новости',
+            author: safeText(item.author) || 'Admin',
+            date: safeText(item.date) || new Date().toISOString(),
+            short: safeText(item.short) || '',
+            content: safeText(item.content) || safeText(item.text) || '',
+            image: normalizeImage(item.image),
+            imageName: safeText(item.imageName) || ''
+          }));
+
+        fillCategories();
+        applyFilters();
+        els.statusText.textContent = 'Готово';
+        els.lastUpdate.textContent = new Date().toLocaleString('ru-RU');
+      } catch (err) {
+        els.statusText.textContent = 'Нет JSON';
+        els.listHint.textContent = 'Не удалось загрузить news.json';
+        state.all = [];
+        state.visible = [];
+        renderEmpty();
+        console.error(err);
+      }
+    }
+
+    function fillCategories() {
+      const categories = [...new Set(state.all.map(n => n.category).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ru'));
+      const current = els.filterCategory.value || 'all';
+      els.filterCategory.innerHTML = '<option value="all">Все категории</option>' + categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      if ([...els.filterCategory.options].some(o => o.value === current)) {
+        els.filterCategory.value = current;
+      }
+    }
+
+    function applyFilters() {
+      const q = els.search.value.trim().toLowerCase();
+      const cat = els.filterCategory.value;
+      const sort = els.sortBy.value;
+
+      let items = [...state.all];
+      if (cat !== 'all') items = items.filter(n => n.category === cat);
+      if (q) {
+        items = items.filter(n => {
+          const hay = [n.title, n.category, n.author, n.short, n.content].join(' ').toLowerCase();
+          return hay.includes(q);
+        });
+      }
+
+      items.sort((a, b) => {
+        const da = new Date(a.date).getTime() || 0;
+        const db = new Date(b.date).getTime() || 0;
+        return sort === 'oldest' ? da - db : db - da;
+      });
+
+      state.visible = items;
+      renderAll();
+    }
+
+    function renderAll() {
+      els.totalCount.textContent = state.all.length;
+      els.visibleCount.textContent = state.visible.length;
+      els.listHint.textContent = state.visible.length ? 'Нажми на карточку, чтобы открыть новость' : 'Ничего не найдено';
+
+      if (!state.visible.length) {
+        renderEmpty();
+        renderFeatured(null);
+        return;
+      }
+
+      renderFeatured(state.visible[0]);
+      els.newsList.innerHTML = state.visible.map((item, index) => renderCard(item, index)).join('');
+    }
+
+    function renderEmpty() {
+      els.newsList.innerHTML = '<div class="empty">Новостей пока нет или они не подходят под текущий фильтр.</div>';
+      if (!state.visible.length) {
+        els.featuredBox.innerHTML = '<div class="empty">Здесь появится первая новость после загрузки файла <b>news.json</b>.</div>';
+      }
+    }
+
+    function renderFeatured(item) {
+      if (!item) {
+        els.featuredBox.innerHTML = '<div class="empty">Здесь появится первая новость после загрузки файла <b>news.json</b>.</div>';
+        return;
+      }
+
+      const img = item.image || 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect width="1200" height="675" fill="#0b1730"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#84a8dd" font-size="48" font-family="Arial">Standoff 2 News</text></svg>`);
+      els.featuredBox.innerHTML = `
+        <img class="featured-image" src="${escapeHtml(img)}" alt="${escapeHtml(item.title)}" />
+        <div class="meta-row">
+          <span class="badge">${escapeHtml(item.category)}</span>
+          <span class="badge">${escapeHtml(formatDate(item.date))}</span>
+          <span class="badge">${escapeHtml(item.author)}</span>
+        </div>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${escapeHtml(item.short || item.content || '')}</p>
+      `;
+
+      const featured = els.featuredBox.querySelector('.featured-image, .empty');
+      if (featured && featured.classList && featured.classList.contains('featured-image')) {
+        featured.addEventListener('click', () => openModal(item));
+      }
+      els.featuredBox.style.cursor = 'pointer';
+      els.featuredBox.onclick = () => openModal(item);
+    }
+
+    function renderCard(item, index) {
+      const img = item.image || 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260"><rect width="400" height="260" fill="#0b1730"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#84a8dd" font-size="20" font-family="Arial">No image</text></svg>`);
+      return `
+        <article class="news-card" data-index="${index}">
+          <img class="thumb" src="${escapeHtml(img)}" alt="${escapeHtml(item.title)}" />
+          <div class="news-body">
+            <div class="meta-row" style="margin-bottom:8px;">
+              <span class="badge">${escapeHtml(item.category)}</span>
+              <span class="badge">${escapeHtml(formatDate(item.date))}</span>
+            </div>
+            <h4>${escapeHtml(item.title)}</h4>
+            <p>${escapeHtml(item.short || item.content || '')}</p>
+            <div class="news-info">
+              <span>Автор: ${escapeHtml(item.author)}</span>
+              <span>•</span>
+              <span>ID: ${escapeHtml(item.id)}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function openModal(item) {
+      els.modalTitle.textContent = item.title;
+      els.modalText.textContent = item.content || item.short || '';
+      els.modalMeta.innerHTML = `
+        <span class="badge">${escapeHtml(item.category)}</span>
+        <span class="badge">${escapeHtml(formatDate(item.date))}</span>
+        <span class="badge">${escapeHtml(item.author)}</span>
+      `;
+      const img = item.image || 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect width="1200" height="675" fill="#0b1730"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#84a8dd" font-size="48" font-family="Arial">Standoff 2 News</text></svg>`);
+      els.modalImg.src = img;
+      els.modalImg.alt = item.title;
+      els.modal.classList.add('open');
+    }
+
+    function closeModal() {
+      els.modal.classList.remove('open');
+    }
+
+    els.search.addEventListener('input', applyFilters);
+    els.filterCategory.addEventListener('change', applyFilters);
+    els.sortBy.addEventListener('change', applyFilters);
+
+    els.newsList.addEventListener('click', (e) => {
+      const card = e.target.closest('.news-card');
+      if (!card) return;
+      const item = state.visible[Number(card.dataset.index)];
+      if (item) openModal(item);
+    });
+
+    els.closeModal.addEventListener('click', closeModal);
+    els.modal.addEventListener('click', (e) => {
+      if (e.target === els.modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    loadNews();
+  </script>
+</body>
+</html>

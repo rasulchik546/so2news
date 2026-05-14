@@ -338,7 +338,6 @@
         <h1><span>NEWS</span> HUB</h1>
         <small>ARTICLES</small>
       </div>
-
       <div class="controls">
         <input class="search" id="searchInput" type="search" placeholder="Поиск по статьям..." />
         <select class="select" id="sortSelect">
@@ -346,7 +345,6 @@
           <option value="oldest">Сначала старые</option>
         </select>
       </div>
-
       <div class="tabs" id="tabs"></div>
       <div class="status" id="statusText">Чтение файла news-index.json...</div>
     </section>
@@ -464,61 +462,21 @@
       return [];
     }
 
-    async function fetchJsonSafe(url) {
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return response.json();
-    }
-
-    async function loadAllPosts() {
-      els.statusText.textContent = 'Чтение news-index.json...';
-      try {
-        const indexData = await fetchJsonSafe('./news-index.json');
-        const files = Array.isArray(indexData) ? indexData : [];
-
-        if (!files.length) {
-          state.posts = [];
-          els.statusText.textContent = 'news-index.json пустой';
-          renderTabs();
-          renderPosts();
-          return;
-        }
-
-        const loaded = await Promise.allSettled(
-          files.map(async (file) => {
-            const data = await fetchJsonSafe(`./${file}`);
-            return toArray(data);
-          })
-        );
-
-        const flat = [];
-        for (const item of loaded) {
-          if (item.status === 'fulfilled') {
-            flat.push(...item.value);
-          }
-        }
-
-        setPosts(flat, `Загружено файлов: ${files.length}`);
-      } catch (err) {
-        console.error(err);
-
-        // fallback: if someone still uses only news.json
-        try {
-          els.statusText.textContent = 'news-index.json не найден, пробую news.json...';
-          const data = await fetchJsonSafe('./news.json');
-          setPosts(toArray(data), 'Загружен news.json');
-        } catch (err2) {
-          console.error(err2);
-          state.posts = [];
-          els.statusText.textContent = 'Не удалось прочитать новости';
-          renderTabs();
-          renderPosts();
+    function flattenLoadedData(data) {
+      const output = [];
+      const items = toArray(data);
+      for (const item of items) {
+        if (Array.isArray(item)) {
+          output.push(...flattenLoadedData(item));
+        } else if (item && typeof item === 'object') {
+          output.push(item);
         }
       }
+      return output;
     }
 
     function setPosts(data, statusText) {
-      state.posts = toArray(data).map((item, i) => ({
+      state.posts = flattenLoadedData(data).map((item, i) => ({
         id: String(item.id || `post-${i + 1}`),
         title: String(item.title || '').trim(),
         category: normalizeCategory(item.category),
@@ -531,6 +489,54 @@
       els.statusText.textContent = `${statusText}: ${state.posts.length} статей`;
       renderTabs();
       renderPosts();
+    }
+
+    async function fetchJsonSafe(url) {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    }
+
+    async function loadAllPosts() {
+      els.statusText.textContent = 'Чтение news-index.json...';
+      try {
+        const indexData = await fetchJsonSafe('./news-index.json?v=' + Date.now());
+        const files = Array.isArray(indexData) ? indexData : [];
+
+        if (!files.length) {
+          state.posts = [];
+          els.statusText.textContent = 'news-index.json пустой';
+          renderTabs();
+          renderPosts();
+          return;
+        }
+
+        const allPosts = [];
+        for (const rawFile of files) {
+          const file = String(rawFile || '').trim();
+          if (!file) continue;
+          try {
+            const data = await fetchJsonSafe(`./${encodeURI(file)}?v=${Date.now()}`);
+            allPosts.push(...flattenLoadedData(data));
+          } catch (err) {
+            console.error('Не удалось прочитать файл:', file, err);
+          }
+        }
+
+        setPosts(allPosts, `Загружено файлов: ${files.length}`);
+      } catch (err) {
+        console.error(err);
+        try {
+          const fallback = await fetchJsonSafe('./news.json?v=' + Date.now());
+          setPosts(fallback, 'Загружен news.json');
+        } catch (err2) {
+          console.error(err2);
+          state.posts = [];
+          els.statusText.textContent = 'Не удалось прочитать новости';
+          renderTabs();
+          renderPosts();
+        }
+      }
     }
 
     function renderTabs() {
